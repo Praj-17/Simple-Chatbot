@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Voice Assistant Chat</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <h1>AI Voice Assistant</h1>
+        <div id="chat-box"></div>
+        <form id="chat-form">
+            <input type="text" id="user-input" placeholder="Type your message..." required />
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <script>
+        const form = document.getElementById("chat-form");
+        const chatBox = document.getElementById("chat-box");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const userInput = document.getElementById("user-input").value;
+            
+            // Append user message to chat
+            chatBox.innerHTML += `<div class="message user">${userInput}</div>`;
+            document.getElementById("user-input").value = "";
+
+            const formData = new FormData();
+            formData.append("user_prompt", userInput);
+
+            // Send POST request to backend API
+            const response = await fetch("/api/chat", {
+                method: "POST",
+                body: formData
+            });
+            const data = await response.json();
+            
+            // Append API response to chat
+            chatBox.innerHTML += `<div class="message bot">${data.response || data.error}</div>`;
+        });
+    </script>
+</body>
+</html>
