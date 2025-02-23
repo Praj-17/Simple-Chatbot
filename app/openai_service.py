@@ -1,6 +1,4 @@
 import os
-import requests
-from io import BytesIO
 from openai import OpenAI
 
 class OpenAIService:
@@ -22,3 +20,4 @@ class OpenAIService:
             max_tokens=500,
         )
         return response.choices[0].message.content
+
