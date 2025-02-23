@@ -9,11 +9,13 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /code
 
 # Install dependencies
-COPY app/requirements.txt /code/requirements.txt
+COPY requirements.txt /code/requirements.txt
 RUN pip install --upgrade pip && pip install -r /code/requirements.txt
 
 # Copy project
 COPY app /code/app
+
+COPY . /code
 
 # Expose the port FastAPI runs on
 EXPOSE 8000

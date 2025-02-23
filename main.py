@@ -53,6 +53,15 @@ async def log_requests(request: Request, call_next):
 async def get_chat(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+
+@app.get("/about", response_class=HTMLResponse)
+async def about_page(request: Request):
+    return templates.TemplateResponse("about.html", {"request": request})
+
+
+@app.get("/contact", response_class=HTMLResponse)
+async def contact_page(request: Request):
+    return templates.TemplateResponse("contact.html", {"request": request})
 # POST endpoint to simulate voice input (using text) and get a response from OpenAI
 @app.post("/api/chat")
 async def chat_api(user_prompt: str = Form(...)):
