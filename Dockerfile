@@ -5,17 +5,17 @@ FROM python:3.9-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# Set work directory
+# Set working directory
 WORKDIR /code
 
-# Install dependencies
-COPY requirements.txt /code/requirements.txt
-RUN pip install --upgrade pip && pip install -r /code/requirements.txt
+# Copy only requirements first (for caching)
+COPY requirements.txt .
 
-# Copy project
-COPY app /code/app
+# Install Python dependencies
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
-COPY . /code
+# Copy the rest of the code
+COPY . .
 
 # Expose the port FastAPI runs on
 EXPOSE 8000
